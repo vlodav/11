@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	srand(time(NULL));
+	int sum = 0;
+	for (int i = 1; i <= 2; i++)
+	{
+		string txt = "a"+to_string(i)+".txt";
+		ofstream file;
+		file.open(txt);
+		if (!file.is_open())
+			cout << "произошла ошибка при создании файла!" << endl;
+		else
+		{
+			int size;
+			cout << "введите размер массива вещественных чисел: ";
+			cin >> size;
+			int* arr = new int[size];
+			for (int i = 0; i < size; i++)
+			{
+				arr[i] = rand() % 10 - 3;
+				file << arr[i]<<endl;
+			}
+		}
+		file.close();
+	}
+	for (int i = 1; i <= 2; i++)
+	{
+		int num;
+		string txt = "a" + to_string(i) + ".txt";
+		ifstream file;
+		file.open(txt);
+		if (!file.is_open())
+			cout << "произошла ошибка при создании файла!" << endl;
+		else
+		{
+			cout << "числа массива "<<i<< " : ";
+			while (file>>num)
+			{
+				cout<<num<<"\t";
+				if (num > 0)
+					sum += num;
+			}
+			cout << endl;
+		}
+		file.close();
+	}
+	cout <<"сумма положительных элементов в 2 файлах = " << sum;
+	return 0;
+}
