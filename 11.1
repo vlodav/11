@@ -1,0 +1,59 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <string>
+#include <fstream>
+using namespace std;
+int main() {
+    setlocale(LC_ALL, "ru");
+    srand(time(0));
+    ofstream mufile;
+    mufile.open("a.txt");
+    if (!mufile.is_open())
+    {
+        cout << "произошла ошибка при создании файла"<<endl;
+    }
+    else
+    {
+        int size;
+        cout << "размер массива: ";
+        cin >> size;
+        int* arr = new int[size];
+        for (int i = 0; i < size; i++)
+        {
+            arr[i] = rand() % 8 - 2;
+            mufile << arr[i] << endl;
+        }
+    }
+    mufile.close();
+    ifstream opentxt;
+    opentxt.open("a.txt");
+    int num;
+    int kolvo5 = 0;
+    int sumplus = 0;
+    if (!opentxt)
+    {
+        cout << "произошла ошибка открытия файла!"<< endl;
+    }
+    else
+    {
+        cout << "числа из файла: ";
+       
+        while (opentxt >> num)
+        {
+            cout << num << "\t";
+            if (num == 5)
+            {
+                kolvo5++;
+            }
+            if (num > 0)
+            {
+                sumplus += num;
+            }
+        }
+    }
+    cout <<endl<< "количество элементов равных 5: " << kolvo5 << endl;
+    cout << "сумма положительных элементов: " << sumplus << endl;
+    opentxt.close();
+    return 0;
+}
