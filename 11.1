@@ -1,59 +1,82 @@
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <string>
-#include <fstream>
+#include<iostream>
+#include<string>
+#include<fstream>
 using namespace std;
-int main() {
-    setlocale(LC_ALL, "ru");
-    srand(time(0));
-    ofstream mufile;
-    mufile.open("a.txt");
-    if (!mufile.is_open())
-    {
-        cout << "произошла ошибка при создании файла"<<endl;
-    }
-    else
-    {
-        int size;
-        cout << "размер массива: ";
-        cin >> size;
-        int* arr = new int[size];
-        for (int i = 0; i < size; i++)
-        {
-            arr[i] = rand() % 8 - 2;
-            mufile << arr[i] << endl;
-        }
-    }
-    mufile.close();
-    ifstream opentxt;
-    opentxt.open("a.txt");
-    int num;
-    int kolvo5 = 0;
-    int sumplus = 0;
-    if (!opentxt)
-    {
-        cout << "произошла ошибка открытия файла!"<< endl;
-    }
-    else
-    {
-        cout << "числа из файла: ";
-       
-        while (opentxt >> num)
-        {
-            cout << num << "\t";
-            if (num == 5)
-            {
-                kolvo5++;
-            }
-            if (num > 0)
-            {
-                sumplus += num;
-            }
-        }
-    }
-    cout <<endl<< "количество элементов равных 5: " << kolvo5 << endl;
-    cout << "сумма положительных элементов: " << sumplus << endl;
-    opentxt.close();
-    return 0;
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	double chislo;
+	double SumPlasElement = 0;
+	int KolvoFife = 0;
+	int kolvo;
+	while (true)
+	{
+		cout << "введите 1  для записи в фаил, введите 2 для чтения из файла : ";
+		int vibor;
+		cin>>vibor;
+		if (vibor == 1)
+		{
+			string name;
+			cout << endl << "введите адрес файла или название и он создастся в этой папке" << endl;
+			cin >> name;
+			ofstream f;
+			f.open(name);
+			if (!f.is_open())
+			{
+				cout << "произошла ошибка" << endl;
+			}
+			else
+			{
+				cout << "фаил открылся" << endl;
+				cout << "сколько вещественных чисел вы хотите записать? ";
+				cin >> kolvo;
+				for (int i = 0; i < kolvo; i++)
+				{
+					cout << "введите число номер:" << i + 1 << "\t";
+					cin >> chislo;
+					f << chislo << " ";
+				}
+			}
+			f.close();
+		}
+		if (vibor == 2)
+		{
+			string name;
+			cout << endl << "введите адрес файла" << endl;
+			cin >> name;
+			ifstream f1;
+			f1.open(name);
+			if (!f1.is_open())
+			{
+				cout << "произошла ошибка" << endl;
+			}
+			else
+			{
+				cout << "фаил открылся" << endl;
+				double r;
+				while (f1 >> r)
+				{
+					if (r > 0)
+						SumPlasElement += r;
+					if (r>1 && r == 5)
+						KolvoFife++;
+					cout << r << "\t";
+				}
+				cout << endl;
+				cout << "сумма положительных элементов = " << SumPlasElement << endl;
+				cout << "количество элементов == 5: " << KolvoFife<<endl;
+			}
+			f1.close();
+		}
+		int proverka;
+		cout << "если хотите выполнить еще какую-то операцию введите 1:  ";
+		cin >> proverka;
+		if (proverka != 1)
+		{
+			cout << endl << "программа завершена" << endl;;
+			break;
+		}
+	}
+	
+	return 0;
 }
