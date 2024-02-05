@@ -1,56 +1,86 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <ctime>
-#include <cstdlib>
+#include<iostream>
+#include<string>
+#include<fstream>
 using namespace std;
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	srand(time(NULL));
-	int sum = 0;
-	for (int i = 1; i <= 2; i++)
+	double sum[2]{0,0};
+	int Vibor;
+	double chislo;
+	int proverkacikla;
+	while (true)
 	{
-		string txt = "a"+to_string(i)+".txt";
-		ofstream file;
-		file.open(txt);
-		if (!file.is_open())
-			cout << "произошла ошибка при создании файла!" << endl;
-		else
+		cout << "для создания файлов введите 1, для считывания и подсчета нажмите 2:  ";
+		cin >> Vibor;
+		if (Vibor == 1)
 		{
-			int size;
-			cout << "введите размер массива вещественных чисел: ";
-			cin >> size;
-			int* arr = new int[size];
-			for (int i = 0; i < size; i++)
+			int i = 0;
+			for (; i < 2;)
 			{
-				arr[i] = rand() % 10 - 3;
-				file << arr[i]<<endl;
+				string name;
+				cout << endl << "введите адрес файла ("<<i+1<<")" << " или название для создания в этой папке в этой папке" << endl;
+				cin >> name;
+				ofstream f;
+				f.open(name);
+				if (!f.is_open())
+				{
+					cout << "произошла ошибка!!! Bведите расположение этого файла еще раз" << endl;
+				}
+				else
+				{
+					cout << "фаил открылся" << endl;
+					cout << "сколько вещественных чисел вы хотите записать? ";
+					int kolvo;
+					cin >> kolvo;
+					for (int j = 0; j < kolvo; j++)
+					{
+						cout << "введите число номер:" << j + 1 << "\t";
+						cin >> chislo;
+						f << chislo << " ";
+					}
+					i++;
+				}
+				f.close();
 			}
 		}
-		file.close();
-	}
-	for (int i = 1; i <= 2; i++)
-	{
-		int num;
-		string txt = "a" + to_string(i) + ".txt";
-		ifstream file;
-		file.open(txt);
-		if (!file.is_open())
-			cout << "произошла ошибка при создании файла!" << endl;
-		else
+		if (Vibor == 2)
 		{
-			cout << "числа массива "<<i<< " : ";
-			while (file>>num)
+			int i = 0;
+			for (; i < 2;)
 			{
-				cout<<num<<"\t";
-				if (num > 0)
-					sum += num;
+				string name;
+				cout << endl << "введите адрес файла (" << i + 1 << ") для считывания"<< endl;
+				cin >> name;
+				ifstream f1;
+				f1.open(name);
+				if (!f1.is_open())
+				{
+					cout << "произошла ошибка!!! Bведите расположение этого файла еще раз" << endl;
+				}
+				else
+				{
+					cout << "фаил открылся" << endl;
+					double r;
+					while (f1 >> r)
+					{
+						cout << r << "\t";
+						if (r > 0)
+							sum[i] += r;
+					}
+					cout << endl;
+					i++;
+				}
+				f1.close();
 			}
-			cout << endl;
+			cout << "сумма положительных элементов 1 файла: " << sum[0]<<endl;
+			cout << "сумма положительных элементов 2 файла: " << sum[1] << endl;
+			cout << "сумма положительных элементов 2-х файлов: " << sum[0]+sum[1] << endl;
 		}
-		file.close();
+		cout << "если желаете провести операцию нажмите 1: ";
+		cin >> proverkacikla;
+		if (proverkacikla != 1)
+			break;
 	}
-	cout <<"сумма положительных элементов в 2 файлах = " << sum;
 	return 0;
 }
