@@ -11,7 +11,7 @@ int main()
 	int kolvo;
 	while (true)
 	{
-		cout << "введите 1  для записи в фаил, введите 2 для чтения из файла : ";
+		cout << "введите 1  для записи в фаил, введите 2 для чтения из файла, для выхода введите 0 : ";
 		int vibor;
 		cin>>vibor;
 		if (vibor == 1)
@@ -39,7 +39,7 @@ int main()
 			}
 			f.close();
 		}
-		if (vibor == 2)
+		else if (vibor == 2)
 		{
 			string name;
 			cout << endl << "введите адрес файла" << endl;
@@ -58,24 +58,24 @@ int main()
 				{
 					if (r > 0)
 						SumPlasElement += r;
-					if (r>1 && r == 5)
+					if (r > 1 && r == 5)
 						KolvoFife++;
 					cout << r << "\t";
 				}
 				cout << endl;
 				cout << "сумма положительных элементов = " << SumPlasElement << endl;
-				cout << "количество элементов == 5: " << KolvoFife<<endl;
+				cout << "количество элементов == 5: " << KolvoFife << endl;
 			}
 			f1.close();
 		}
-		int proverka;
-		cout << "если хотите выполнить еще какую-то операцию введите 1:  ";
-		cin >> proverka;
-		if (proverka != 1)
+		else if (vibor == 0)
 		{
 			cout << endl << "программа завершена" << endl;;
 			break;
 		}
+		else
+			cout << "вы ввели неверное число!" << endl;
+			continue;
 	}
 	
 	return 0;
